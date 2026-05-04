@@ -3,71 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Athaaura Events | Event Management</title>
+  <title>Athaaura Events | Luxury Event Management</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: #0f172a;
       color: #fff;
-      scroll-behavior: smooth;
+      background: black;
+      overflow-x: hidden;
+    }
+
+    /* Animated Gradient Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 20%, #0ea5e9, transparent),
+                  radial-gradient(circle at 80% 80%, #9333ea, transparent);
+      animation: moveBG 10s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes moveBG {
+      0% { transform: translate(0,0); }
+      50% { transform: translate(-10%, -10%); }
+      100% { transform: translate(0,0); }
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 60px;
-      background: rgba(2,6,23,0.9);
+      padding: 15px 40px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
-      z-index: 1000;
     }
 
-    header h1 {
-      color: #38bdf8;
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 55px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { filter: drop-shadow(0 0 5px #38bdf8); }
+      to { filter: drop-shadow(0 0 20px #9333ea); }
     }
 
     nav a {
       margin-left: 20px;
-      text-decoration: none;
       color: white;
-      font-weight: 500;
+      text-decoration: none;
+      transition: 0.3s;
     }
 
     nav a:hover { color: #38bdf8; }
 
     .hero {
-      height: 90vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622');
-      background-size: cover;
-      background-position: center;
+      background: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622') center/cover;
     }
 
     .hero h2 {
-      font-size: 42px;
-      margin-bottom: 10px;
+      font-size: 50px;
       animation: fadeInUp 1s ease;
     }
 
     .hero p {
-      font-size: 18px;
-      margin-bottom: 20px;
+      margin: 15px 0;
+      font-size: 20px;
       animation: fadeInUp 1.5s ease;
     }
 
     .btn {
       padding: 12px 25px;
-      background: #38bdf8;
-      color: black;
+      background: linear-gradient(45deg, #0ea5e9, #9333ea);
       border-radius: 30px;
+      color: white;
       text-decoration: none;
       font-weight: bold;
       animation: fadeInUp 2s ease;
@@ -78,68 +105,33 @@
       text-align: center;
     }
 
-    .services {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-
     .card {
-      background: #1e293b;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
       padding: 25px;
       border-radius: 15px;
       width: 260px;
-      transition: 0.4s;
-      opacity: 0;
+      margin: 15px;
+      display: inline-block;
       transform: translateY(30px);
+      opacity: 0;
+      transition: 0.5s;
     }
 
     .card.show {
-      opacity: 1;
       transform: translateY(0);
+      opacity: 1;
     }
 
     .card:hover {
-      transform: translateY(-10px) scale(1.05);
-      background: #334155;
-    }
-
-    .about {
-      max-width: 900px;
-      margin: auto;
-      line-height: 1.7;
-    }
-
-    .gallery {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 30px;
-    }
-
-    .gallery img {
-      width: 300px;
-      border-radius: 10px;
-      transition: 0.4s;
-    }
-
-    .gallery img:hover { transform: scale(1.1); }
-
-    input, textarea {
-      width: 80%;
-      padding: 12px;
-      margin: 10px;
-      border-radius: 5px;
-      border: none;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(147,51,234,0.5);
     }
 
     footer {
       padding: 20px;
       text-align: center;
-      background: #020617;
+      background: #000;
     }
 
     .whatsapp {
@@ -147,11 +139,8 @@
       bottom: 20px;
       right: 20px;
       background: #25D366;
-      color: white;
       padding: 15px;
       border-radius: 50%;
-      text-decoration: none;
-      font-size: 20px;
       animation: bounce 2s infinite;
     }
 
@@ -161,7 +150,7 @@
     }
 
     @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
   </style>
@@ -169,65 +158,33 @@
 <body>
 
 <header>
-  <h1>Athaaura Events</h1>
+  <div class="logo">
+    <img src="logo.png" alt="logo">
+    <h2>Athaaura Events</h2>
+  </div>
   <nav>
     <a href="#">Home</a>
     <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#gallery">Gallery</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
 <section class="hero">
-  <h2>Events That Never Lose Their Charm</h2>
-  <p>Transform your wedding into your dream "Athaaura" experience</p>
-  <a href="#contact" class="btn">Book Your Event</a>
+  <h2>Luxury Events Experience</h2>
+  <p>Events That Never Lose Their Charm</p>
+  <a href="#contact" class="btn">Book Now</a>
 </section>
 
 <section id="services" class="section">
   <h2>Our Services</h2>
-  <div class="services">
-    <div class="card">Wedding Planner<br><small>Themes, Entertainment, Catering</small></div>
-    <div class="card">Corporate Events<br><small>Launches, Conferences, Exhibitions</small></div>
-    <div class="card">Social Events<br><small>Birthdays, Engagements, Parties</small></div>
-    <div class="card">Other Events<br><small>Concerts, Fashion Shows</small></div>
-  </div>
-</section>
-
-<section id="about" class="section">
-  <h2>About Us</h2>
-  <div class="about">
-    <p>At Athaaura Events, we believe every celebration should feel extraordinary. We are a passionate event management team dedicated to turning your ideas into unforgettable experiences.</p>
-    <p>From weddings to corporate events, we bring creativity, precision, and style to every detail. Our goal is to make your event stress-free and memorable.</p>
-    <p>We don’t just manage events — we create experiences that last a lifetime.</p>
-  </div>
-</section>
-
-<section id="gallery" class="section">
-  <h2>Our Work</h2>
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed">
-    <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3">
-    <img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329">
-  </div>
-</section>
-
-<section id="contact" class="section">
-  <h2>Contact Us</h2>
-  <p>📍 Dewas | 📞 7987217601 | ✉ athaauraevents1@gmail.com</p>
-  <form>
-    <input type="text" placeholder="Your Name" required><br>
-    <input type="email" placeholder="Your Email" required><br>
-    <textarea placeholder="Your Message"></textarea><br>
-    <button class="btn">Send Message</button>
-  </form>
-  <br>
-  <a href="https://www.instagram.com/athaaura_events" class="btn">Visit Instagram</a>
+  <div class="card">Wedding Planner</div>
+  <div class="card">Corporate Events</div>
+  <div class="card">Social Events</div>
+  <div class="card">Concerts & Shows</div>
 </section>
 
 <footer>
-  <p>© 2026 Athaaura Events | Dewas</p>
+  <p>© 2026 Athaaura Events | Luxury Experience</p>
 </footer>
 
 <a href="https://wa.me/917987217601" class="whatsapp">💬</a>
